@@ -74,7 +74,7 @@ module mainfsm (
                 if(FUNCT[0])
                     nextstate = MEMRD;
                 else
-                    nextstate = UNKNOWN;          
+                    nextstate = MEMWR;
             MEMRD:    nextstate = UNKNOWN; // TODO
             default: nextstate = FETCH;
         endcase
@@ -86,17 +86,17 @@ module mainfsm (
     // state-dependent output logic
     always @(*)
         case (state)
-            FETCH: controls = 13'b1000101001100;
-            DECODE: controls = 13'b0000001001100;
-            EXECUTER: controls = 13'b0001001000001; 
-            EXECUTEI: controls = 13'b0000000000011; 
-            ALUWB: controls = 13'b0001000000000; 
-            MEMADR: controls = 13'b0000000000010; 
-            MEMWR: controls = 13'b0010010000000; 
-            MEMRD: controls = 13'b0000010000000; 
-            MEMWB: controls = 13'b0001000100000; 
-            BRANCH: controls = 13'b0100001010010; 
-            default: controls = 13'bxxxxxxxxxxxxx;
+            FETCH: controls    = 13'b1000101001100;
+            DECODE: controls   = 13'b0000001001100;
+            EXECUTER: controls = 13'b0001001000001;
+            EXECUTEI: controls = 13'b0000000000011;
+            ALUWB: controls    = 13'b0001000000000;
+            MEMADR: controls   = 13'b0000000000010;
+            MEMWR: controls    = 13'b0010010000000;
+            MEMRD: controls    = 13'b0000010000000;
+            MEMWB: controls    = 13'b0001000100000;
+            BRANCH: controls   = 13'b0100001010010;
+            default: controls  = 13'bxxxxxxxxxxxxx;
         endcase
     assign {NextPC, Branch, MemW, RegW, IRWrite, AdrSrc, ResultSrc, ALUSrcA, ALUSrcB, ALUOp} = controls;
 endmodule
