@@ -68,10 +68,14 @@ module mainfsm (
                     2'b10: nextstate = BRANCH;
                     default: nextstate = UNKNOWN;
                 endcase
-            //EXECUTER: nextstate = UNKNOWN; // TODO
-            //EXECUTEI: nextstate = UNKNOWN; // TODO
-            //MEMADR:   nextstate = UNKNOWN; // TODO
-            //MEMRD:    nextstate = UNKNOWN; // TODO
+            EXECUTER: nextstate = UNKNOWN; // TODO
+            EXECUTEI: nextstate = UNKNOWN; // TODO
+            MEMADR:
+                if(FUNCT[0])
+                    nextstate = MEMRD;
+                else
+                    nextstate = UNKNOWN;          
+            MEMRD:    nextstate = UNKNOWN; // TODO
             default: nextstate = FETCH;
         endcase
 
@@ -84,14 +88,14 @@ module mainfsm (
         case (state)
             FETCH: controls = 13'b1000101001100;
             DECODE: controls = 13'b0000001001100;
-            //EXECUTER: controls = 13'bxxxxxxxxxxxxx; // TODO
-            //EXECUTEI: controls = 13'bxxxxxxxxxxxxx; // TODO
-            //ALUWB: controls = 13'bxxxxxxxxxxxxx; // TODO
-            //MEMADR: controls = 13'bxxxxxxxxxxxxx; // TODO
-            //MEMWR: controls = 13'bxxxxxxxxxxxxx; // TODO
-            //MEMRD: controls = 13'bxxxxxxxxxxxxx; // TODO
-            //MEMWB: controls = 13'bxxxxxxxxxxxxx; // TODO
-            //BRANCH: controls = 13'bxxxxxxxxxxxxx; // TODO
+            EXECUTER: controls = 13'b0001001000001; 
+            EXECUTEI: controls = 13'b0000000000011; 
+            ALUWB: controls = 13'b0001000000000; 
+            MEMADR: controls = 13'b0000000000010; 
+            MEMWR: controls = 13'b0010010000000; 
+            MEMRD: controls = 13'b0000010000000; 
+            MEMWB: controls = 13'b0001000100000; 
+            BRANCH: controls = 13'b0100001010010; 
             default: controls = 13'bxxxxxxxxxxxxx;
         endcase
     assign {NextPC, Branch, MemW, RegW, IRWrite, AdrSrc, ResultSrc, ALUSrcA, ALUSrcB, ALUOp} = controls;
