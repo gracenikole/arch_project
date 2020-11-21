@@ -68,14 +68,14 @@ module mainfsm (
                     2'b10: nextstate = BRANCH;
                     default: nextstate = UNKNOWN;
                 endcase
-            EXECUTER: nextstate = UNKNOWN; // TODO
-            EXECUTEI: nextstate = UNKNOWN; // TODO
+            EXECUTER: nextstate = ALUWB;
+            EXECUTEI: nextstate = ALUWB;
             MEMADR:
                 if(FUNCT[0])
                     nextstate = MEMRD;
                 else
                     nextstate = MEMWR;
-            MEMRD:    nextstate = UNKNOWN; // TODO
+            MEMRD:    nextstate = MEMWB;
             default: nextstate = FETCH;
         endcase
 
