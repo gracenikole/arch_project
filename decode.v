@@ -64,6 +64,27 @@ module decode (
     // Remember, you may reuse code from previous labs.
     // ALU Decoder
 
+    always @(*) begin
+        if (ALUOp) begin
+            case (Funct[4:1])
+                4'b0100: ALUControl = 3'b000; // ADD
+                4'b0010: ALUControl = 3'b001; // SUB
+                4'b0000: ALUControl = 3'b010; // AND
+                4'b1100: ALUControl = 3'b011; // ORR
+
+                4'b0001: ALUControl = 3'b100; // EOR
+
+                default: ALUControl = 3'bxx;
+            endcase
+            FlagW[1] = Funct[0];
+            FlagW[0] = Funct[0] & ((ALUControl == 3'b000) | (ALUControl == 3'b001));
+        end
+        else begin
+            ALUControl = 3'b000;
+            FlagW = 2'b00;
+        end
+    end
+
     // PC Logic
 
 
