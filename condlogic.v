@@ -42,6 +42,11 @@ module condlogic (
     );
 
     // ADD CODE HERE
+    condcheck cc(
+        .Cond(Cond),
+        .Flags(Flags),
+        .CondEx(CondEx)
+    );
 
 endmodule
 
