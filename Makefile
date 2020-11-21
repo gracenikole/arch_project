@@ -3,4 +3,4 @@ default: arm_multi.vvp
 arm_multi.vvp: arm_multi.v
 	iverilog -o $@ -- $<
 
-arm_single.vvp: $(filter-out arm_single.v, $(wildcard *.v))
+arm_multi.vvp: $(filter-out arm_multi.v, $(wildcard *.v))
