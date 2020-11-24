@@ -18,8 +18,12 @@ module controller_tb;
     wire [1:0] ImmSrc;
     wire [2:0] ALUControl;
 
+    reg [31:0] i;
     reg [31:0] RAM [63:0];
-    initial $readmemh("memfile.dat", RAM);
+    initial begin
+        $readmemh("memfile.dat", RAM);
+        i = 0;
+    end
 
     controller c(
         .clk(clk),
@@ -39,12 +43,6 @@ module controller_tb;
         .ALUControl(ALUControl)
     );
 
-    initial begin
-        reset <= 1;
-        #(10);
-        reset <= 0;
-    end
-
     always begin
         clk <= 1;
         #(5);
@@ -52,7 +50,21 @@ module controller_tb;
         #(5);
     end
 
-    // TODO: Loop on the instructions
+    initial begin
+        reset <= 1;
+        ALUFlags = 0;
+        #(10);
+
+        reset <= 0;
+        #(10);
+    end
+
+    always @(posedge clk) begin
+        Instr = RAM[i][31:12];
+        if(PCWrite) begin
+            i += 1;
+        end
+    end
 
     initial begin
         $dumpfile("controller.vcd");
