@@ -87,6 +87,7 @@ module decode (
 
     // PC Logic
 
+    assign PCS = ((Rd == 4'b1111) & RegW) | Branch;
 
     // Add code for the Instruction Decoder (Instr Decoder) below.
     // Recall that the input to Instr Decoder is Op, and the outputs are
