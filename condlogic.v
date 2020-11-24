@@ -59,6 +59,20 @@ module condlogic (
         .q(CondExFlop)
     );
 
+    flopr #(2) ALUF1Reg(
+        .clk(clk),
+        .reset(reset),
+        .d(ALUFlags[3:2]),
+        .q(Flags[3:2])
+    );
+
+    flopr #(2) ALUF2Reg(
+        .clk(clk),
+        .reset(reset),
+        .d(ALUFlags[1:0]),
+        .q(Flags[1:0])
+    );
+
     assign MemWrite = CondExFlop & MemW;
     assign RegWrite = CondExFlop & RegWrite;
     assign PCWrite = NextPC | (PCS & CondExFlop);
