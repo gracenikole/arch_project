@@ -77,6 +77,7 @@
 `include "datapath.v"
 `include "decode.v"
 `include "flopr.v"
+`include "flopenr.v"
 `include "mainfsm.v"
 `include "mem.v"
 `include "mux3.v"
