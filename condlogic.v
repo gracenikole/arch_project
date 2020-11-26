@@ -59,16 +59,18 @@ module condlogic (
         .q(CondExFlop)
     );
 
-    flopr #(2) ALUF1Reg(
+    flopenr #(2) ALUF1Reg(
         .clk(clk),
         .reset(reset),
+        .en(FlagWrite[1]),
         .d(ALUFlags[3:2]),
         .q(Flags[3:2])
     );
 
-    flopr #(2) ALUF2Reg(
+    flopenr #(2) ALUF2Reg(
         .clk(clk),
         .reset(reset),
+        .en(FlagWrite[0]),
         .d(ALUFlags[1:0]),
         .q(Flags[1:0])
     );
