@@ -82,3 +82,5 @@
 `include "mem.v"
 `include "mux3.v"
 `include "top.v"
+
+`include "controller_tb.v"

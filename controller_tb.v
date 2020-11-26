@@ -21,7 +21,8 @@ module controller_tb;
     reg [31:0] i;
     reg [31:0] RAM [63:0];
     initial begin
-        $readmemh("memfile.dat", RAM);
+        $readmemb("mc.tv", RAM);
+        //$readmemh("memfile.dat", RAM);
         i = 0;
     end
 
@@ -56,12 +57,20 @@ module controller_tb;
         #(10);
 
         reset <= 0;
-        #(10);
     end
 
     always @(posedge clk) begin
-        Instr = RAM[i][31:12];
-        if(PCWrite) begin
+        Instr = RAM[i][31:0];
+        $display("%d %h", i, Instr);
+
+        if(^Instr === 1'bx) begin
+            $finish;
+        end
+
+    end
+
+    always @(negedge clk) begin
+        if(PCWrite && !reset) begin
             i += 1;
         end
     end
