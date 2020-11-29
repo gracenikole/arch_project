@@ -66,23 +66,33 @@ module datapath (
 
     // ADD CODE HERE
 
-    flopr #(32) pcreg(
+    flopenr #(32) pcreg(
         .clk(clk),
         .reset(reset),
+        .en(PCWrite),
         .d(PCNext),
         .q(PC)
     );
 
-    //regfile rf(
-    //    .clk(clk),
-    //    .we3(RegWrite),
-    //    .ra1(RA1),
-    //    .ra2(RA2),
-    //    .wa3(Instr[15:12]),
-    //    .wd3(Result),
-    //    .r15(PCPlus8),
-    //    .rd1(SrcA),
-    //    .rd2(WriteData)
-    //);
+    regfile rf(
+        .clk(clk),
+        .we3(RegWrite),
+        .ra1(RA1),
+        .ra2(RA2),
+        .wa3(Instr[15:12]),
+        .wd3(Result),
+        .r15(Result),
+        .rd1(SrcA),
+        .rd2(WriteData)
+    );
+
+    flopenr #(32) instrreg(
+        .clk(clk),
+        .reset(reset),
+        .en(IRWrite),
+        .d(ReadData),
+        .q(Instr)
+    );
+
 
 endmodule
