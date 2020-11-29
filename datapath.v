@@ -150,4 +150,29 @@ module datapath (
         .y(SrcB)
     );
 
+    alu a(
+        .a(SrcA),
+        .b(SrcB),
+        .ALUControl(ALUControl),
+        .Result(ALUResult),
+        .ALUFlags(ALUFlags)
+    );
+
+    flopr #(32) alureg(
+        .clk(clk),
+        .reset(reset),
+        .d(ALUResult),
+        .q(ALUOut)
+    );
+
+    mux3 #(32) resultmux(
+        .d0(ALUOut),
+        .d1(Data),
+        .d2(ALUResult),
+        .s(ResultSrc),
+        .y(Result)
+    );
+
+    assign PCNext = Result;
+
 endmodule
