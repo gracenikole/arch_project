@@ -118,14 +118,36 @@ module datapath (
         .wa3(Instr[15:12]),
         .wd3(Result),
         .r15(Result),
-        .rd1(SrcA),
-        .rd2(WriteData)
+        .rd1(RD1),
+        .rd2(RD2)
     );
 
     extend ext(
         .Instr(Instr[23:0]),
         .ImmSrc(ImmSrc),
         .ExtImm(ExtImm)
+    );
+
+    flopr #(64) rdreg(
+        .clk(clk),
+        .reset(reset),
+        .d({RD1, RD2}),
+        .q({A, WriteData})
+    );
+
+    mux2 #(32) srcamux(
+        .d0(A),
+        .d1(PC),
+        .s(ALUSrcA[0]),
+        .y(SrcA)
+    );
+
+    mux3 #(32) srcbmux(
+        .d0(WriteData),
+        .d1(ExtImm),
+        .d2(32'd4),
+        .s(ALUSrcB),
+        .y(SrcB)
     );
 
 endmodule
