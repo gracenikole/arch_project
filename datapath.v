@@ -74,6 +74,13 @@ module datapath (
         .q(PC)
     );
 
+    mux2 #(32) adrmux(
+        .d0(PC),
+        .d1(PCNext),
+        .s(AdrSrc),
+        .y(Adr)
+    );
+
     regfile rf(
         .clk(clk),
         .we3(RegWrite),

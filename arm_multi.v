@@ -81,6 +81,7 @@
 `include "flopr.v"
 `include "mainfsm.v"
 `include "mem.v"
+`include "mux2.v"
 `include "mux3.v"
 `include "regfile.v"
 `include "top.v"
