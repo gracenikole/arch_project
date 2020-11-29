@@ -65,5 +65,24 @@ module datapath (
     // (Address Mux), etc. so that your code is easier to understand.
 
     // ADD CODE HERE
-endmodule
 
+    flopr #(32) pcreg(
+        .clk(clk),
+        .reset(reset),
+        .d(PCNext),
+        .q(PC)
+    );
+
+    //regfile rf(
+    //    .clk(clk),
+    //    .we3(RegWrite),
+    //    .ra1(RA1),
+    //    .ra2(RA2),
+    //    .wa3(Instr[15:12]),
+    //    .wd3(Result),
+    //    .r15(PCPlus8),
+    //    .rd1(SrcA),
+    //    .rd2(WriteData)
+    //);
+
+endmodule
