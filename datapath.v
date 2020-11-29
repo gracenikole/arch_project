@@ -81,18 +81,6 @@ module datapath (
         .y(Adr)
     );
 
-    regfile rf(
-        .clk(clk),
-        .we3(RegWrite),
-        .ra1(RA1),
-        .ra2(RA2),
-        .wa3(Instr[15:12]),
-        .wd3(Result),
-        .r15(Result),
-        .rd1(SrcA),
-        .rd2(WriteData)
-    );
-
     flopenr #(32) instrreg(
         .clk(clk),
         .reset(reset),
@@ -122,6 +110,22 @@ module datapath (
         .y(RA2)
     );
 
+    regfile rf(
+        .clk(clk),
+        .we3(RegWrite),
+        .ra1(RA1),
+        .ra2(RA2),
+        .wa3(Instr[15:12]),
+        .wd3(Result),
+        .r15(Result),
+        .rd1(SrcA),
+        .rd2(WriteData)
+    );
 
+    extend ext(
+        .Instr(Instr[23:0]),
+        .ImmSrc(ImmSrc),
+        .ExtImm(ExtImm)
+    );
 
 endmodule

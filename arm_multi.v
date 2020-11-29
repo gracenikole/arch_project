@@ -77,6 +77,7 @@
 `include "controller.v"
 `include "datapath.v"
 `include "decode.v"
+`include "extend.v"
 `include "flopenr.v"
 `include "flopr.v"
 `include "mainfsm.v"
