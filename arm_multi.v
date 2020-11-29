@@ -70,14 +70,15 @@
 //    1110  Always                        any
 //   Writes to register 15 (PC) are ignored
 
+`include "alu.v"
 `include "arm.v"
 `include "condcheck.v"
 `include "condlogic.v"
 `include "controller.v"
 `include "datapath.v"
 `include "decode.v"
-`include "flopr.v"
 `include "flopenr.v"
+`include "flopr.v"
 `include "mainfsm.v"
 `include "mem.v"
 `include "mux3.v"
