@@ -34,7 +34,7 @@ module testbench;
         $display("%h %h %h %h", dut.arm.dp.PC, Adr, dut.arm.dp.ReadData, dut.MemWrite);
 
         if (MemWrite)
-            if ((Adr === 128) & (WriteData === 254)) begin
+            if ((Adr === 100) & (WriteData === 7)) begin
                 $display("Simulation succeeded");
                 $finish;
             end
