@@ -87,4 +87,6 @@
 `include "regfile.v"
 `include "top.v"
 
-`include "controller_tb.v"
+// `include "controller_tb.v"
+// `include "tb_tb.v"
+`include "datapath_tb.v"
