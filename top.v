@@ -5,15 +5,15 @@ module top (
     reset,
     WriteData,
     Adr,
-    MemWrite
+    MemWrite,
 );
     input wire clk;
     input wire reset;
     output wire [31:0] WriteData;
     output wire [31:0] Adr;
     output wire MemWrite;
-    wire [31:0] PC;
-    wire [31:0] Instr;
+//    wire [31:0] PC;
+//    wire [31:0] Instr;
     wire [31:0] ReadData;
     // instantiate processor and shared memory
     arm arm(
