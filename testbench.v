@@ -18,7 +18,7 @@ module testbench;
 
     initial begin
         reset <= 1;
-        #(10)
+        #(5)
             ;
         reset <= 0;
     end
@@ -38,10 +38,11 @@ module testbench;
                 $display("Simulation succeeded");
                 $finish;
             end
-       if (^dut.arm.Instr === 1'bx) begin
+
+       if (!reset & ^dut.arm.Instr === 1'bx) begin
             $fatal(1, "Simulation failed");
             $stop;
-        end
+       end
 
     end
     initial begin
