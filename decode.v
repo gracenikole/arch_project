@@ -72,20 +72,20 @@ module decode (
                 case(Funct[4:1])
                     4'b0000: ALUControl = 3'b101; //MUL
                     4'b0100: ALUControl = 3'b110; //UMULL
-                    4'b0110: ALUControl = 3'b111; //SMULL  
+                    4'b0110: ALUControl = 3'b111; //SMULL
                 endcase
             end
-            else begin 
+            else begin
                 case (Funct[4:1])
-                    4'b0100: ALUControl = 3'b000; // ADD 
+                    4'b0100: ALUControl = 3'b000; // ADD
                     4'b0010: ALUControl = 3'b001; // SUB
-                    4'b0000: ALUControl = 3'b010; // AND   
+                    4'b0000: ALUControl = 3'b010; // AND
                     4'b1100: ALUControl = 3'b011; // ORR
 
                     4'b0001: ALUControl = 3'b100; // EOR
 
                     default: ALUControl = 3'bxx;
-                      
+
                 endcase
             end
             FlagW[1] = Funct[0];

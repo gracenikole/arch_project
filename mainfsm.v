@@ -45,6 +45,8 @@ module mainfsm (
     localparam [3:0] ALUWB    = 8;
     localparam [3:0] BRANCH   = 9;
     localparam [3:0] UNKNOWN  = 10;
+    localparam [3:0] EXECUTEF = 11; // Float
+    localparam [3:0] FWB      = 12; // FPU write back
 
     // state register
     always @(posedge clk or posedge reset)
@@ -71,6 +73,7 @@ module mainfsm (
                             nextstate = EXECUTER;
                     2'b01: nextstate = MEMADR;
                     2'b10: nextstate = BRANCH;
+                    2'b11: nextstate = EXECUTEF;
                     default: nextstate = UNKNOWN;
                 endcase
             MEMADR:
@@ -83,6 +86,8 @@ module mainfsm (
             MEMWR:    nextstate = FETCH;
             EXECUTER: nextstate = ALUWB;
             EXECUTEI: nextstate = ALUWB;
+            EXECUTEF: nextstate = FWB;
+            FWB:      nextstate = FETCH;
             ALUWB:    nextstate = FETCH;
             BRANCH:   nextstate = FETCH;
             default:  nextstate = FETCH;
@@ -95,17 +100,19 @@ module mainfsm (
     // state-dependent output logic
     always @(*)
         case (state)
-            FETCH: controls    = 13'b1_0_0_0_1_0_10_01_10_0;
-            DECODE: controls   = 13'b0_0_0_0_0_0_10_01_10_0;
+            FETCH:    controls = 13'b1_0_0_0_1_0_10_01_10_0;
+            DECODE:   controls = 13'b0_0_0_0_0_0_10_01_10_0;
             EXECUTER: controls = 13'b0_0_0_0_0_0_00_00_00_1;
             EXECUTEI: controls = 13'b0_0_0_0_0_0_00_00_01_1;
-            ALUWB: controls    = 13'b0_0_0_1_0_0_00_00_00_0;
-            MEMADR: controls   = 13'b0_0_0_0_0_0_00_00_01_0;
-            MEMWR: controls    = 13'b0_0_1_0_0_1_00_00_00_0;
-            MEMRD: controls    = 13'b0_0_0_0_0_1_00_00_00_0;
-            MEMWB: controls    = 13'b0_0_0_1_0_0_01_00_00_0;
-            BRANCH: controls   = 13'b0_1_0_0_0_0_10_00_01_0;
-            default: controls  = 13'bxxxxxxxxxxxxx;
+            ALUWB:    controls = 13'b0_0_0_1_0_0_00_00_00_0;
+            MEMADR:   controls = 13'b0_0_0_0_0_0_00_00_01_0;
+            MEMWR:    controls = 13'b0_0_1_0_0_1_00_00_00_0;
+            MEMRD:    controls = 13'b0_0_0_0_0_1_00_00_00_0;
+            MEMWB:    controls = 13'b0_0_0_1_0_0_01_00_00_0;
+            BRANCH:   controls = 13'b0_1_0_0_0_0_10_00_01_0;
+            EXECUTEF: controls = 13'bx; // TODO
+            FWB:      controls = 13'bx; // TODO
+            default:  controls = 13'bxxxxxxxxxxxxx;
         endcase
     assign {NextPC, Branch, MemW, RegW, IRWrite, AdrSrc, ResultSrc, ALUSrcA, ALUSrcB, ALUOp} = controls;
 endmodule
