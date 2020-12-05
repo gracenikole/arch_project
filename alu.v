@@ -3,6 +3,7 @@
 
 module alu(a, b, ALUControl, Result, Result2, ALUFlags);
     input [31:0] a, b;
+    // input signed [31:0] sa, sb;
     input [2:0] ALUControl;
     // ALUControl  | Operación
     // 000         | ADD
@@ -34,7 +35,7 @@ module alu(a, b, ALUControl, Result, Result2, ALUFlags);
             3'b100: Result = a ^ b;
             3'b101: Result = a * b;
             3'b110: {Result, Result2} = a * b;
-            // 3'b110: {Result, Result2} = ;
+            // 3'b111: {Result, Result2} = sa * sb;
         endcase
 
     // assign Result = ALUControl[2]? a^b:
