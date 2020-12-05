@@ -93,7 +93,7 @@ module datapath (
         .clk(clk),
         .reset(reset),
         .d(ReadData),
-        .q(Instr)
+        .q(Data)
     );
 
     mux2 #(4) ra1mux(

@@ -97,7 +97,7 @@ module mainfsm (
         case (state)
             FETCH: controls    = 13'b1_0_0_0_1_0_10_01_10_0;
             DECODE: controls   = 13'b0_0_0_0_0_0_10_01_10_0;
-            EXECUTER: controls = 13'b0_0_0_1_0_0_10_00_00_1;
+            EXECUTER: controls = 13'b0_0_0_0_0_0_00_00_00_1;
             EXECUTEI: controls = 13'b0_0_0_0_0_0_00_00_01_1;
             ALUWB: controls    = 13'b0_0_0_1_0_0_00_00_00_0;
             MEMADR: controls   = 13'b0_0_0_0_0_0_00_00_01_0;

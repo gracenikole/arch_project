@@ -86,7 +86,5 @@
 `include "mux3.v"
 `include "regfile.v"
 `include "top.v"
+`include "testbench.v"
 
-// `include "controller_tb.v"
-// `include "tb_tb.v"
-`include "datapath_tb.v"
