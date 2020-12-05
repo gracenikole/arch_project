@@ -26,8 +26,19 @@ module alu(a, b, ALUControl, Result, Result2, ALUFlags);
     assign sum = a + _b + ALUControl[0];
 
     // Usé esto en lugar del switch para que Result no sea un reg.
-    assign Result = ALUControl[2]? a^b:
-        ALUControl[1]? (ALUControl[0]? (a|b) : (a&b)) : sum;
+    always @(*)
+        casex (ALUControl[2:0]) //case, casex, casez
+            2'b00?: Result = sum;
+            3'b010: Result = a & b;
+            3'b011: Result = a | b;
+            3'b100: Result = a ^ b;
+            3'b101: Result = a * b;
+            3'b110: {Result, Result2} = a * b;
+            3'b110: {Result, Result2} = ;
+        endcase
+
+    // assign Result = ALUControl[2]? a^b:
+    //     ALUControl[1]? (ALUControl[0]? (a|b) : (a&b)) : sum;
 
     assign N = Result[31];
     assign Z = Result == 0;
