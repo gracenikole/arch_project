@@ -14,8 +14,8 @@ module alu(a, b, ALUControl, Result, Result2, ALUFlags);
     // 110         | UMULL
     // 111         | SMULL
 
-    output [31:0] Result;
-    output [31:0] Result2;
+    output reg [31:0] Result;
+    output reg [31:0] Result2;
     output [3:0] ALUFlags;
 
     wire N, Z, C, V;
@@ -28,7 +28,7 @@ module alu(a, b, ALUControl, Result, Result2, ALUFlags);
     // Usé esto en lugar del switch para que Result no sea un reg.
     always @(*)
         casex (ALUControl[2:0]) //case, casex, casez
-            2'b00?: Result = sum;
+            3'b00?: Result = sum;
             3'b010: Result = a & b;
             3'b011: Result = a | b;
             3'b100: Result = a ^ b;
