@@ -4,6 +4,7 @@ module decode (
     clk,
     reset,
     Op,
+    Mop,
     Funct,
     Rd,
     FlagW,
@@ -24,6 +25,7 @@ module decode (
     input wire reset;
     input wire [1:0] Op;
     input wire [5:0] Funct;
+    input wire [3:0] Mop;
     input wire [3:0] Rd;
     output reg [1:0] FlagW;
     output wire PCS;
@@ -66,16 +68,26 @@ module decode (
 
     always @(*) begin
         if (ALUOp) begin
-            case (Funct[4:1])
-                4'b0100: ALUControl = 3'b000; // ADD
-                4'b0010: ALUControl = 3'b001; // SUB
-                4'b0000: ALUControl = 3'b010; // AND
-                4'b1100: ALUControl = 3'b011; // ORR
+            if(Mop[3:0] == 4'b1001) begin
+                case(Funct[4:1])
+                    4'b0000: ALUControl = 3'b101; //MUL
+                    4'b0100: ALUControl = 3'b110; //UMULL
+                    4'b0110: ALUControl = 3'b111; //SMULL  
+                endcase
+            end
+            else begin 
+                case (Funct[4:1])
+                    4'b0100: ALUControl = 3'b000; // ADD 
+                    4'b0010: ALUControl = 3'b001; // SUB
+                    4'b0000: ALUControl = 3'b010; // AND   
+                    4'b1100: ALUControl = 3'b011; // ORR
 
-                4'b0001: ALUControl = 3'b100; // EOR
+                    4'b0001: ALUControl = 3'b100; // EOR
 
-                default: ALUControl = 3'bxx;
-            endcase
+                    default: ALUControl = 3'bxx;
+                      
+                endcase
+            end
             FlagW[1] = Funct[0];
             FlagW[0] = Funct[0] & ((ALUControl == 3'b000) | (ALUControl == 3'b001));
         end

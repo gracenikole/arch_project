@@ -54,6 +54,7 @@ module datapath (
     wire [31:0] RD2;
     wire [31:0] A;
     wire [31:0] ALUResult;
+    wire [31:0] ALUResult2;
     wire [31:0] ALUOut;
     wire [3:0] RA1;
     wire [3:0] RA2;
@@ -155,6 +156,7 @@ module datapath (
         .b(SrcB),
         .ALUControl(ALUControl),
         .Result(ALUResult),
+        .Result2(ALUResult2),
         .ALUFlags(ALUFlags)
     );
 

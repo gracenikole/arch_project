@@ -1,7 +1,7 @@
 // vim: set expandtab:
 `timescale 1ns/1ns
 
-module alu(a, b, ALUControl, Result, ALUFlags);
+module alu(a, b, ALUControl, Result, Result2, ALUFlags);
     input [31:0] a, b;
     input [2:0] ALUControl;
     // ALUControl  | Operación
@@ -10,8 +10,12 @@ module alu(a, b, ALUControl, Result, ALUFlags);
     // 010         | AND
     // 011         | ORR
     // 100         | EOR
+    // 101         | MUL
+    // 110         | UMULL
+    // 111         | SMULL
 
     output [31:0] Result;
+    output [31:0] Result2;
     output [3:0] ALUFlags;
 
     wire N, Z, C, V;
