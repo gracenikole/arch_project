@@ -25,7 +25,7 @@ module decode (
     input wire reset;
     input wire [1:0] Op;
     input wire [5:0] Funct;
-    input wire [3:0] Mop
+    input wire [3:0] Mop;
     input wire [3:0] Rd;
     output reg [1:0] FlagW;
     output wire PCS;
@@ -68,11 +68,12 @@ module decode (
 
     always @(*) begin
         if (ALUOp) begin
-            if(Mop[3:0] == 4b'1001) begin
+            if(Mop[3:0] == 4'b1001) begin
                 case(Funct[4:1])
                     4'b0000: ALUControl = 3'b101; //MUL
                     4'b0100: ALUControl = 3'b110; //UMULL
                     4'b0110: ALUControl = 3'b111; //SMULL  
+                endcase
             end
             else begin 
                 case (Funct[4:1])
