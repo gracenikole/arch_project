@@ -28,14 +28,20 @@ module alu(a, b, ALUControl, Result, Result2, ALUFlags);
 
     // Usé esto en lugar del switch para que Result no sea un reg.
     always @(*)
-        casex (ALUControl[2:0]) //case, casex, casez
+        casex (ALUControl[2:0])  //case, casex, casez
             3'b00?: Result = sum;
             3'b010: Result = a & b;
             3'b011: Result = a | b;
             3'b100: Result = a ^ b;
             3'b101: Result = a * b;
             3'b110: {Result, Result2} = a * b;
-            // 3'b111: {Result, Result2} = sa * sb;
+            3'b111: 
+			case({a[31],b[31]}) 
+				2'b00: {Result,Result2} = a*b;
+				2'b01: {Result,Result2} =-((a)*-(b));
+				2'b10: {Result,Result2} =-(-(a)*(b));
+				2'b11: {Result,Result2} = -(a) * -(b);
+			endcase	
         endcase
 
     // assign Result = ALUControl[2]? a^b:
