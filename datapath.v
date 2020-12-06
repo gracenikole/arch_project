@@ -25,7 +25,7 @@ module datapath (
     ResultSrc,
     ImmSrc,
     ALUControl,
-	lmulFlag
+    lmulFlag
 );
     input wire clk;
     input wire reset;
@@ -44,7 +44,7 @@ module datapath (
     input wire [1:0] ResultSrc;
     input wire [1:0] ImmSrc;
     input wire [2:0] ALUControl;
-	input wire lmulFlag;
+    input wire lmulFlag;
     wire [31:0] PCNext;
     wire [31:0] PC;
     wire [31:0] ExtImm;
