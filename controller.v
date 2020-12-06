@@ -60,7 +60,7 @@ module controller (
         .ImmSrc(ImmSrc),
         .RegSrc(RegSrc),
         .ALUControl(ALUControl),
-	.lmulFlag(lmulFlag)
+        .lmulFlag(lmulFlag)
     );
     condlogic cl(
         .clk(clk),

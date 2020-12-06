@@ -62,8 +62,8 @@ module decode (
         .MemW(MemW),
         .Branch(Branch),
         .ALUOp(ALUOp),
-	.long(long),
-	.lmulFlag(lmulFlag)
+        .long(long),
+        .lmulFlag(lmulFlag)
     );
 
     // ADD CODE BELOW
@@ -78,13 +78,13 @@ module decode (
                 case(Funct[4:1])
                     4'b0000: ALUControl = 3'b101; //MUL
                     4'b0100: begin
-			     long = 1; 
-			     ALUControl = 3'b110; //UMULL
-			end
+                 long = 1;
+                 ALUControl = 3'b110; //UMULL
+            end
                     4'b0110: begin
-			     long = 1;
-			     ALUControl = 3'b111; //SMULL
-			end
+                 long = 1;
+                 ALUControl = 3'b111; //SMULL
+            end
                 endcase
             end
             else begin

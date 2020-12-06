@@ -34,53 +34,53 @@ input wire clk;
     wire [3:0] RA1;
     wire [3:0] RA2;
 
-	datapath datapath(
-		.clk(clk),
-		.reset(reset),
-		.Adr(Adr),
-		.WriteData(WriteData),
-		.ReadData(ReadData),
-		.Instr(Instr[31:12]),
-		.ALUFlags(ALUFlags),
-		.PCWrite(PCWrite),
-		.RegWrite(RegWrite),
-		.IRWrite(IRWrite),
-		.AdrSrc(AdrSrc),
-		.RegSrc(RegSrc),
-		.ALUSrcA(ALUSrcA),
-		.ALUSrcB(ALUSrcB),
-		.ResultSrc(ResultSrc),
-		.ImmSrc(ImmSrc),
-		.ALUControl(ALUControl),
-		.PCNext(PCNext),
-		.PC(PC),
-		.ExtImm(ExtImm),
-		.SrcA(SrcA),
-		.SrcB(SrcB),
-		.Result(Result),
-		.Data(Data),
-		.RD1(RD1),
-		.RD2(RD2),
-		.A(A),
-		.ALUResult(ALUResult),
-		.ALUOut(ALUOut),
-		.RA1(RA1),
-		.RA2(RA2)
-	);
+    datapath datapath(
+        .clk(clk),
+        .reset(reset),
+        .Adr(Adr),
+        .WriteData(WriteData),
+        .ReadData(ReadData),
+        .Instr(Instr[31:12]),
+        .ALUFlags(ALUFlags),
+        .PCWrite(PCWrite),
+        .RegWrite(RegWrite),
+        .IRWrite(IRWrite),
+        .AdrSrc(AdrSrc),
+        .RegSrc(RegSrc),
+        .ALUSrcA(ALUSrcA),
+        .ALUSrcB(ALUSrcB),
+        .ResultSrc(ResultSrc),
+        .ImmSrc(ImmSrc),
+        .ALUControl(ALUControl),
+        .PCNext(PCNext),
+        .PC(PC),
+        .ExtImm(ExtImm),
+        .SrcA(SrcA),
+        .SrcB(SrcB),
+        .Result(Result),
+        .Data(Data),
+        .RD1(RD1),
+        .RD2(RD2),
+        .A(A),
+        .ALUResult(ALUResult),
+        .ALUOut(ALUOut),
+        .RA1(RA1),
+        .RA2(RA2)
+    );
 
-	initial begin
-		$readmemh("dp.tv", RAM);
-		i = 0;
-	end
+    initial begin
+        $readmemh("dp.tv", RAM);
+        i = 0;
+    end
 
-	always begin
-		clk <= 1;
-		#(5);
-		clk <= 0;
-		#(5);
-	end
-	
-	initial begin
+    always begin
+        clk <= 1;
+        #(5);
+        clk <= 0;
+        #(5);
+    end
+
+    initial begin
         reset <= 1;
         ALUFlags = 0;
         #(10);
@@ -88,7 +88,7 @@ input wire clk;
         reset <= 0;
     end
 
-	always @(posedge clk) begin
+    always @(posedge clk) begin
         Instr = RAM[i][31:0];
         $display("%d %h", i, Instr);
 
@@ -98,7 +98,7 @@ input wire clk;
 
     end
 
-	always @(negedge clk) begin
+    always @(negedge clk) begin
         if(PCWrite && !reset) begin
             i += 1;
         end

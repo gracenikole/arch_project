@@ -93,7 +93,7 @@ module mainfsm (
             EXECUTEF: nextstate = FWB;
             FWB:      nextstate = FETCH;
             ALUWB:    nextstate = FETCH;
-			ALUWB2:   nextstate = FETCH;
+            ALUWB2:   nextstate = FETCH;
             BRANCH:   nextstate = FETCH;
             default:  nextstate = FETCH;
         endcase
@@ -117,7 +117,7 @@ module mainfsm (
             BRANCH:   controls = 14'b0_1_0_0_0_0_10_00_01_0_0;
             EXECUTEF: controls = 14'bx; // TODO
             FWB:      controls = 14'bx; // TODO
-	    ALUWB2:   controls = 14'b0_0_0_1_0_0_00_00_00_0_1;
+            ALUWB2:   controls = 14'b0_0_0_1_0_0_00_00_00_0_1;
             default:  controls = 14'bxxxxxxxxxxxxxx;
         endcase
     assign {NextPC, Branch, MemW, RegW, IRWrite, AdrSrc, ResultSrc, ALUSrcA, ALUSrcB, ALUOp, lmulFlag} = controls;

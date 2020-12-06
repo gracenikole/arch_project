@@ -44,7 +44,7 @@ module arm (
         .ResultSrc(ResultSrc),
         .ImmSrc(ImmSrc),
         .ALUControl(ALUControl),
-	.lmulFlag(lmulFlag)
+        .lmulFlag(lmulFlag)
     );
     datapath dp(
         .clk(clk),
@@ -64,6 +64,6 @@ module arm (
         .ResultSrc(ResultSrc),
         .ImmSrc(ImmSrc),
         .ALUControl(ALUControl),
-	.lmulFlag(lmulFlag)
+        .lmulFlag(lmulFlag)
     );
 endmodule
