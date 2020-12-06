@@ -15,8 +15,8 @@ module mainfsm (
     MemW,
     Branch,
     ALUOp,
-	long,
-	lmulFlag
+    long,
+    lmulFlag
 );
     input wire clk;
     input wire reset;
@@ -32,11 +32,11 @@ module mainfsm (
     output wire MemW;
     output wire Branch;
     output wire ALUOp;
-	output wire lmulFlag;
+    output wire lmulFlag;
     reg [3:0] state;
     reg [3:0] nextstate;
     reg [12:0] controls;
-	input wire long;
+    input wire long;
 
     localparam [3:0] FETCH    = 0;
     localparam [3:0] DECODE   = 1;
@@ -51,7 +51,7 @@ module mainfsm (
     localparam [3:0] UNKNOWN  = 10;
     localparam [3:0] EXECUTEF = 11; // Float
     localparam [3:0] FWB      = 12; // FPU write back
-	localparam [3:0] ALUWB2   = 13; // Long mult
+    localparam [3:0] ALUWB2   = 13; // Long mult
     // state register
     always @(posedge clk or posedge reset)
         if (reset)
@@ -117,7 +117,7 @@ module mainfsm (
             BRANCH:   controls = 14'b0_1_0_0_0_0_10_00_01_0_0;
             EXECUTEF: controls = 14'bx; // TODO
             FWB:      controls = 14'bx; // TODO
-			ALUWB2:   controls = 14'b0_0_0_1_0_0_00_00_00_0_1;
+	    ALUWB2:   controls = 14'b0_0_0_1_0_0_00_00_00_0_1;
             default:  controls = 14'bxxxxxxxxxxxxxx;
         endcase
     assign {NextPC, Branch, MemW, RegW, IRWrite, AdrSrc, ResultSrc, ALUSrcA, ALUSrcB, ALUOp, lmulFlag} = controls;
