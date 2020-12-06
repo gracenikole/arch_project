@@ -35,7 +35,7 @@ module mainfsm (
     output wire lmulFlag;
     reg [3:0] state;
     reg [3:0] nextstate;
-    reg [12:0] controls;
+    reg [13:0] controls;
     input wire long;
 
     localparam [3:0] FETCH    = 0;

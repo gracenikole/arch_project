@@ -72,8 +72,8 @@ module decode (
     // ALU Decoder
 
     always @(*) begin
+        long = 0;
         if (ALUOp) begin
-			long = 0;
             if(Mop[3:0] == 4'b1001) begin
                 case(Funct[4:1])
                     4'b0000: ALUControl = 3'b101; //MUL

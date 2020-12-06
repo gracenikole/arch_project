@@ -31,7 +31,7 @@ module arm (
     controller c(
         .clk(clk),
         .reset(reset),
-        .Instr(Instr[31:12]),
+        .Instr(Instr),
         .ALUFlags(ALUFlags),
         .PCWrite(PCWrite),
         .MemWrite(MemWrite),
