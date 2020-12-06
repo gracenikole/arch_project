@@ -9,7 +9,7 @@ module double_adder (srcA, srcB, result);
     //wire N, Z, C, V;
 
     wire [63:0] expA = {56'b0, srcA[30:23]};
-    wire [63:0] expB = {56'b0, srcA[30:23]};
+    wire [63:0] expB = {56'b0, srcB[30:23]};
 
     wire [63:0] manA = {8'b0, 1'b1, srcA[51:0]};
     wire [63:0] manB = {8'b0, 1'b1, srcB[51:0]};
