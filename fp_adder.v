@@ -1,15 +1,15 @@
 // vim: set expandtab:
-module fp_adder (srcA, srcB);
+module fp_adder (srcA, srcB, result);
     input [31:0] srcA;
     input [31:0] srcB;
 
     output [31:0] result;
-    output [3:0] ALUFlags;
+    //output [3:0] ALUFlags;
 
-    wire N, Z, C, V;
+    //wire N, Z, C, V;
 
-    wire [31:0] expA = {24'b0, srcA[31:23]};
-    wire [31:0] expB = {24'b0, srcA[31:23]};
+    wire [31:0] expA = {24'b0, srcA[30:23]};
+    wire [31:0] expB = {24'b0, srcA[30:23]};
 
     wire [31:0] manA = {8'b0, 1'b1, srcA[22:0]};
     wire [31:0] manB = {8'b0, 1'b1, srcB[22:0]};
@@ -28,6 +28,6 @@ module fp_adder (srcA, srcB);
     wire [31:0] _sum = sum[31:24] != 0 ? sum >> 1 : sum;
     wire [31:0] expRshift = sum[31:24] != 0 ? expR + 1 : expR;
 
-    assign result = {1'b1, expRshift[7:0], _sum[22:0]};
+    assign result = {1'b0, expRshift[7:0], _sum[22:0]};
 
-endmodule //fp_adder
+endmodule
