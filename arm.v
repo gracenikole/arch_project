@@ -26,6 +26,8 @@ module arm (
     wire [1:0] ImmSrc;
     wire [2:0] ALUControl;
     wire [1:0] ResultSrc;
+	wire lmulFlag;
+
     controller c(
         .clk(clk),
         .reset(reset),
@@ -41,7 +43,8 @@ module arm (
         .ALUSrcB(ALUSrcB),
         .ResultSrc(ResultSrc),
         .ImmSrc(ImmSrc),
-        .ALUControl(ALUControl)
+        .ALUControl(ALUControl),
+		.lmulFlag(lmulFlag)
     );
     datapath dp(
         .clk(clk),
@@ -60,6 +63,7 @@ module arm (
         .ALUSrcB(ALUSrcB),
         .ResultSrc(ResultSrc),
         .ImmSrc(ImmSrc),
-        .ALUControl(ALUControl)
+        .ALUControl(ALUControl),
+		.lmulFlag(lmulFlag)
     );
 endmodule

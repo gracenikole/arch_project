@@ -24,7 +24,8 @@ module datapath (
     ALUSrcB,
     ResultSrc,
     ImmSrc,
-    ALUControl
+    ALUControl,
+	lmulFlag
 );
     input wire clk;
     input wire reset;
@@ -43,6 +44,7 @@ module datapath (
     input wire [1:0] ResultSrc;
     input wire [1:0] ImmSrc;
     input wire [2:0] ALUControl;
+	input wire lmulFlag;
     wire [31:0] PCNext;
     wire [31:0] PC;
     wire [31:0] ExtImm;
@@ -58,6 +60,7 @@ module datapath (
     wire [31:0] ALUOut;
     wire [3:0] RA1;
     wire [3:0] RA2;
+
 
     // Your datapath hardware goes below. Instantiate each of the
     // submodules that you need. Remember that you can reuse hardware

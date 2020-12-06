@@ -14,7 +14,9 @@ module mainfsm (
     RegW,
     MemW,
     Branch,
-    ALUOp
+    ALUOp,
+	long,
+	lmulFlag
 );
     input wire clk;
     input wire reset;
@@ -30,9 +32,11 @@ module mainfsm (
     output wire MemW;
     output wire Branch;
     output wire ALUOp;
+	output wire lmulFlag;
     reg [3:0] state;
     reg [3:0] nextstate;
     reg [12:0] controls;
+	input wire long;
 
     localparam [3:0] FETCH    = 0;
     localparam [3:0] DECODE   = 1;
@@ -47,7 +51,7 @@ module mainfsm (
     localparam [3:0] UNKNOWN  = 10;
     localparam [3:0] EXECUTEF = 11; // Float
     localparam [3:0] FWB      = 12; // FPU write back
-
+	localparam [3:0] ALUWB2   = 13; // Long mult
     // state register
     always @(posedge clk or posedge reset)
         if (reset)
@@ -84,11 +88,12 @@ module mainfsm (
             MEMRD:    nextstate = MEMWB;
             MEMWB:    nextstate = FETCH;
             MEMWR:    nextstate = FETCH;
-            EXECUTER: nextstate = ALUWB;
-            EXECUTEI: nextstate = ALUWB;
+            EXECUTER: nextstate = long == 1 ? ALUWB2 : ALUWB;
+            EXECUTEI: nextstate = long == 1 ? ALUWB2 : ALUWB;
             EXECUTEF: nextstate = FWB;
             FWB:      nextstate = FETCH;
             ALUWB:    nextstate = FETCH;
+			ALUWB2:   nextstate = FETCH;
             BRANCH:   nextstate = FETCH;
             default:  nextstate = FETCH;
         endcase
@@ -100,20 +105,21 @@ module mainfsm (
     // state-dependent output logic
     always @(*)
         case (state)
-            FETCH:    controls = 13'b1_0_0_0_1_0_10_01_10_0;
-            DECODE:   controls = 13'b0_0_0_0_0_0_10_01_10_0;
-            EXECUTER: controls = 13'b0_0_0_0_0_0_00_00_00_1;
-            EXECUTEI: controls = 13'b0_0_0_0_0_0_00_00_01_1;
-            ALUWB:    controls = 13'b0_0_0_1_0_0_00_00_00_0;
-            MEMADR:   controls = 13'b0_0_0_0_0_0_00_00_01_0;
-            MEMWR:    controls = 13'b0_0_1_0_0_1_00_00_00_0;
-            MEMRD:    controls = 13'b0_0_0_0_0_1_00_00_00_0;
-            MEMWB:    controls = 13'b0_0_0_1_0_0_01_00_00_0;
-            BRANCH:   controls = 13'b0_1_0_0_0_0_10_00_01_0;
-            EXECUTEF: controls = 13'bx; // TODO
-            FWB:      controls = 13'bx; // TODO
-            default:  controls = 13'bxxxxxxxxxxxxx;
+            FETCH:    controls = 14'b1_0_0_0_1_0_10_01_10_0_0;
+            DECODE:   controls = 14'b0_0_0_0_0_0_10_01_10_0_0;
+            EXECUTER: controls = 14'b0_0_0_0_0_0_00_00_00_1_0;
+            EXECUTEI: controls = 14'b0_0_0_0_0_0_00_00_01_1_0;
+            ALUWB:    controls = 14'b0_0_0_1_0_0_00_00_00_0_0;
+            MEMADR:   controls = 14'b0_0_0_0_0_0_00_00_01_0_0;
+            MEMWR:    controls = 14'b0_0_1_0_0_1_00_00_00_0_0;
+            MEMRD:    controls = 14'b0_0_0_0_0_1_00_00_00_0_0;
+            MEMWB:    controls = 14'b0_0_0_1_0_0_01_00_00_0_0;
+            BRANCH:   controls = 14'b0_1_0_0_0_0_10_00_01_0_0;
+            EXECUTEF: controls = 14'bx; // TODO
+            FWB:      controls = 14'bx; // TODO
+			ALUWB2:   controls = 14'b0_0_0_1_0_0_00_00_00_0_1;
+            default:  controls = 14'bxxxxxxxxxxxxxx;
         endcase
-    assign {NextPC, Branch, MemW, RegW, IRWrite, AdrSrc, ResultSrc, ALUSrcA, ALUSrcB, ALUOp} = controls;
+    assign {NextPC, Branch, MemW, RegW, IRWrite, AdrSrc, ResultSrc, ALUSrcA, ALUSrcB, ALUOp, lmulFlag} = controls;
 endmodule
 
