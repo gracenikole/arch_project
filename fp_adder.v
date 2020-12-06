@@ -1,4 +1,5 @@
 // vim: set expandtab:
+
 module fp_adder (srcA, srcB, result);
     input [31:0] srcA;
     input [31:0] srcB;
@@ -9,7 +10,7 @@ module fp_adder (srcA, srcB, result);
     //wire N, Z, C, V;
 
     wire [31:0] expA = {24'b0, srcA[30:23]};
-    wire [31:0] expB = {24'b0, srcA[30:23]};
+    wire [31:0] expB = {24'b0, srcB[30:23]};
 
     wire [31:0] manA = {8'b0, 1'b1, srcA[22:0]};
     wire [31:0] manB = {8'b0, 1'b1, srcB[22:0]};
