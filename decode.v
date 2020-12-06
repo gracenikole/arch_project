@@ -20,7 +20,7 @@ module decode (
     ImmSrc,
     RegSrc,
     ALUControl,
-	lmulFlag
+    lmulFlag
 );
     input wire clk;
     input wire reset;
@@ -40,11 +40,11 @@ module decode (
     output wire [1:0] ALUSrcB;
     output wire [1:0] ImmSrc;
     output wire [1:0] RegSrc;
-	output wire lmulFlag;
+    output wire lmulFlag;
     output reg [2:0] ALUControl;
     wire Branch;
     wire ALUOp;
-	reg long;
+    reg long;
 
     // Main FSM
     mainfsm fsm(
@@ -62,8 +62,8 @@ module decode (
         .MemW(MemW),
         .Branch(Branch),
         .ALUOp(ALUOp),
-		.long(long),
-		.lmulFlag(lmulFlag)
+	.long(long),
+	.lmulFlag(lmulFlag)
     );
 
     // ADD CODE BELOW
@@ -78,13 +78,13 @@ module decode (
                 case(Funct[4:1])
                     4'b0000: ALUControl = 3'b101; //MUL
                     4'b0100: begin
-							long = 1; 
-							ALUControl = 3'b110; //UMULL
-						end
+			     long = 1; 
+			     ALUControl = 3'b110; //UMULL
+			end
                     4'b0110: begin
-							long = 1;
-							ALUControl = 3'b111; //SMULL
-						end
+			     long = 1;
+			     ALUControl = 3'b111; //SMULL
+			end
                 endcase
             end
             else begin
@@ -97,7 +97,6 @@ module decode (
                     4'b0001: ALUControl = 3'b100; // EOR
 
                     default: ALUControl = 3'bxx;
-
                 endcase
             end
             FlagW[1] = Funct[0];
