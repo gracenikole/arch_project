@@ -25,7 +25,7 @@ module fpu_regfile (
     input wire A2;
     input wire A3;
 
-    input wire sod; // 0 = single 1 = double
+    input wire sod; // 0 = single 1 = double Instr[8]
 
     input wire [63:0] wd3;
 

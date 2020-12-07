@@ -89,3 +89,4 @@
 `include "testbench.v"
 `include "fp_adder.v"
 `include "double_adder.v"
+`include "fpu.v"
