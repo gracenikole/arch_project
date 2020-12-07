@@ -69,6 +69,7 @@ module datapath (
     wire [63:0] FA;
     wire [63:0] FWriteData;
     wire [63:0] FResult;
+    wire [63:0] FPUResult;
 
 
     // Your datapath hardware goes below. Instantiate each of the
@@ -188,6 +189,27 @@ module datapath (
         .wd3(FResult),
         .rd1(FRD1),
         .rd2(FRD2)
+    );
+
+    flopr #(128) frdreg(
+        .clk(clk),
+        .reset(reset),
+        .d({FRD1, FRD2}),
+        .q({FA, FWriteData})
+    );
+
+    fpu f(
+        .a(FA),
+        .b(FWriteData),
+        .double(Instr[8]),
+        .Result(FPUResult)
+    );
+
+    flopr #(64) fpureg(
+        .clk(clk),
+        .reset(reset),
+        .d(FPUResult),
+        .q(FResult)
     );
 
     flopr #(32) alureg(
