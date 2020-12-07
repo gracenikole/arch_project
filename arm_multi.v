@@ -90,3 +90,4 @@
 `include "fp_adder.v"
 `include "double_adder.v"
 `include "fpu.v"
+`include "fpu_regfile.v"

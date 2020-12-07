@@ -25,7 +25,8 @@ module datapath (
     ResultSrc,
     ImmSrc,
     ALUControl,
-    lmulFlag
+    lmulFlag,
+    FpuWrite
 );
     input wire clk;
     input wire reset;
@@ -45,6 +46,8 @@ module datapath (
     input wire [1:0] ImmSrc;
     input wire [2:0] ALUControl;
     input wire lmulFlag;
+    input wire FpuWrite;
+
     wire [31:0] PCNext;
     wire [31:0] PC;
     wire [31:0] ExtImm;
@@ -61,6 +64,11 @@ module datapath (
     wire [31:0] ALUOut2;
     wire [3:0] RA1;
     wire [3:0] RA2;
+    wire [63:0] FRD1;
+    wire [63:0] FRD2;
+    wire [63:0] FA;
+    wire [63:0] FWriteData;
+    wire [63:0] FResult;
 
 
     // Your datapath hardware goes below. Instantiate each of the
@@ -165,6 +173,21 @@ module datapath (
         .Result(ALUResult),
         .Result2(ALUResult2),
         .ALUFlags(ALUFlags)
+    );
+
+    fpu_regfile fpu_regfile(
+        .clk(clk),
+        .we3(FpuWrite),
+        .ra1(Instr[19:16]),
+        .ra2(Instr[3:0]),
+        .wa3(Instr[15:12]),
+        .A1(Instr[7]),
+        .A2(Instr[5]),
+        .A3(Instr[6]),
+        .sod(Instr[8]),
+        .wd3(FResult),
+        .rd1(FRD1),
+        .rd2(FRD2)
     );
 
     flopr #(32) alureg(

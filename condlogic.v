@@ -13,9 +13,11 @@ module condlogic (
     NextPC,
     RegW,
     MemW,
+    FpuW,
     PCWrite,
     RegWrite,
-    MemWrite
+    MemWrite,
+    FpuWrite
 );
     input wire clk;
     input wire reset;
@@ -26,9 +28,13 @@ module condlogic (
     input wire NextPC;
     input wire RegW;
     input wire MemW;
+    input wire FpuW;
+
     output wire PCWrite;
     output wire RegWrite;
     output wire MemWrite;
+    output wire FpuWrite;
+
     wire [1:0] FlagWrite;
     wire [3:0] Flags;
     wire CondEx;
@@ -77,6 +83,7 @@ module condlogic (
 
     assign MemWrite = CondExFlop & MemW;
     assign RegWrite = CondExFlop & RegW;
+    assign FpuWrite = CondExFlop & FpuW;
     assign PCWrite = NextPC | (PCS & CondExFlop);
 
 endmodule

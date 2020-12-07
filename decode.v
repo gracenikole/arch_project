@@ -20,7 +20,8 @@ module decode (
     ImmSrc,
     RegSrc,
     ALUControl,
-    lmulFlag
+    lmulFlag,
+    FpuW
 );
     input wire clk;
     input wire reset;
@@ -42,6 +43,7 @@ module decode (
     output wire [1:0] RegSrc;
     output wire lmulFlag;
     output reg [2:0] ALUControl;
+    output wire FpuW;
     wire Branch;
     wire ALUOp;
     reg long;
@@ -63,7 +65,8 @@ module decode (
         .Branch(Branch),
         .ALUOp(ALUOp),
         .long(long),
-        .lmulFlag(lmulFlag)
+        .lmulFlag(lmulFlag),
+        .FpuW(FpuW)
     );
 
     // ADD CODE BELOW
