@@ -58,6 +58,7 @@ module datapath (
     wire [31:0] ALUResult;
     wire [31:0] ALUResult2;
     wire [31:0] ALUOut;
+    wire [31:0] ALUOut2;
     wire [3:0] RA1;
     wire [3:0] RA2;
 
@@ -120,7 +121,10 @@ module datapath (
         .ra1(RA1),
         .ra2(RA2),
         .wa3(Instr[15:12]),
+        .wa4(Instr[11:8]),
         .wd3(Result),
+        .wd4(ALUResult2),
+        .long(lmulFlag),
         .r15(Result),
         .rd1(RD1),
         .rd2(RD2)
@@ -168,6 +172,13 @@ module datapath (
         .reset(reset),
         .d(ALUResult),
         .q(ALUOut)
+    );
+
+    flopr #(32) alureg2(
+        .clk(clk),
+        .reset(reset),
+        .d(ALUResult2),
+        .q(ALUOut2)
     );
 
     mux3 #(32) resultmux(

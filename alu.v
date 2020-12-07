@@ -15,8 +15,8 @@ module alu(a, b, ALUControl, Result, Result2, ALUFlags);
     // 110         | UMULL
     // 111         | SMULL
 
-    output reg [31:0] Result;
-    output reg [31:0] Result2;
+    output reg [31:0] Result; // low
+    output reg [31:0] Result2; // high
     output [3:0] ALUFlags;
 
     wire N, Z, C, V;
