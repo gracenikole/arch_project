@@ -132,7 +132,7 @@ module datapath (
         .wa3(Instr[15:12]),
         .wa4(Instr[11:8]),
         .wd3(Result),
-        .wd4(ALUResult2),
+        .wd4(ALUOut2),
         .long(lmulFlag),
         .r15(Result),
         .rd1(RD1),
