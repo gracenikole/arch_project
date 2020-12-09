@@ -1,73 +1,37 @@
-// MAIN	 
-//En memoria de Grace				
+//00000000 <AROUND-0x48>:
+	e04f000f   //  0:	sub	r0, pc, pc
+	e2801e7d   //  4:	add	r1, r0, #2000
+	e2802004   //  8:	add	r2, r0, #4
+	e2803005   //  c:	add	r3, r0, #5
+	e0040191   // 10:	mul	r4, r1, r1
+	e0025003   // 14:	and	r5, r2, r3
+	e0876394   // 18:	umull	r6, r7, r4, r3
+	e2433002   // 1c:	sub	r3, r3, #2
+	e1822005   // 20:	orr	r2, r2, r5
+	e0855003   // 24:	add	r5, r5, r3
+	e0040094   // 28:	mul	r4, r4, r0
+	e2844e73   // 2c:	add	r4, r4, #1840
+	e0511004   // 30:	subs	r1, r1, r4
+	0a000010   // 34:	beq	7c <END>
+	e2044000   // 38:	and	r4, r4, #0
+	e2844006   // 3c:	add	r4, r4, #6
+	aa000000   // 40:	bge	48 <AROUND>
+	e2805000   // 44:	add	r5, r0, #0
 
-//			 SUB R0, R15, R15 							; R0 = 0								                E04F000F			0x00
-//       ADD R1, R0, #2000              ; R1 = 2000								              E2801E7D			0x04		
-//  		 ADD R2, R0, #4     						; R2 = 4								                E2802004			0x08	
-//  		 ADD R3, R0, #5    							; R3 = 5								                E2803005			0x0c
-//			 MUL R4, R1, R1								  ; R4 = 2000^2 = 4000000		              E0040191			0x10
-//  		 AND R5, R2, R3    							; R5 = 4 AND 5 = 4                      E0025003			0x14
-// 			 UMULL R6, R7, R4, R3           ; {R6,R7} = 4000000 * 5 = 20000000	  	E0876394			0x18
-//  		 SUB R3, R3, #2    							; R3 = 5 - 2 = 3						            E2433002			0x1c
-//  		 ORR R2, R2, R5    							; R2 = 4 OR 4 = 4					            	E1874002			0x20
-//  		 ADD R5, R5, R3    							; R5 = 4 + 3 = 7						            E0855003			0x24
-//       MUL R4, R4, R0                 ; R4 = 4000000 * 0 = 0			        		E0040094			0x28
-//			 ADD R4, R4, #1840              ; R4 = 1840								              E2884E73			0x2c
-//  		 SUBS R1, R1, R4    					  ; R1 <= 2000 - 1840 = 160, set Flags    E0511004			0x30
-//       BEQ END			        				  ; shouldn't be taken            		    0A000012			0x34	
-//       AND R4, R4, #0								  ; R4 = 1840 AND 0 = 0					          E2044000			0x38
-//       ADD R4, R4, #6                 ; R4 = 0 + 6 = 6   						          E2844006      0x3c 	
-//       BGE AROUND				       				; should be taken               		    AA000000			0x40
-//  		 ADD R5, R0, #0     						; should be skipped    					        E2805000      0x44   
-// AROUND   																																						  		0x48				
-//       SMULL R8, R9, R4, R1           ; {R8, R9} = 6 * 160 = 960				      E0C98194			0x4c
-//			 SUBS R6, R1, #180   						; R6 = 160 - 180 = -20, set Flags   	  E25160B4			0x50
-// 	     MUL R3, R2, R5                 ; R3 = 4 * 7 = 28					            	E0030592			0x54
-//       ADDLT R2, R5, #1  							; R2 = 7 + 1 = 8						            B2852001			0x58
-// 			 SMULL R10, R11, R6, R2         ; {R10, R11} = -20 * 8 = -160			      E0CBA296			0x5c
-//       SUB R5, R2, R6    							; R5 = 8 - 6 = 2						            E0425006			0x60
-//       STR R5, [R2, #84]  						; mem[8+84] = 2							            E5825054			0x64
-//       LDR R5, [R0, #96]  						; R7 = mem[96] = 2					          	E5905060			0x68
-//       ADD R15, R15, R0							  ; PC <- PC + 8 (skips next)     		    E08FF000			0x6c
-//       ADD R2, R0, #14  					  	; shouldn't happen          			      E280200E   		0x70
-//B END							             			  ; always taken							            EA000002			0x74
-//       ADD R3, R0, #13   							; shouldn't happen						          E280300D			0x78			
-//       ADD R5, R0, #10							  ; shouldn't happen					          	E280500A			0x7c
-//       STR R2, [R0, #100] 						; mem[100] = 7 							            E5802064			0x80
-//END																																													0x84			
+//00000048 <AROUND>:
+	e0c98194   // 48:	smull	r8, r9, r4, r1
+	e25160b4   // 4c:	subs	r6, r1, #180
+	e0030592   // 50:	mul	r3, r2, r5
+	b2852001   // 54:	addlt	r2, r5, #1
+	e0cba296   // 58:	smull	sl, fp, r6, r2
+	e0425006   // 5c:	sub	r5, r2, r6
+	e5825054   // 60:	str	r5, [r2, #84]
+	e5905060   // 64:	ldr	r5, [r0, #96]
+	e08ff000   // 68:	add	pc, pc, r0
+	e280200e   // 6c:	add	r2, r0, #14
+	ea000001   // 70:	b	7c <END>
+	e280300d   // 74:	add	r3, r0, #13
+	e280500a   // 78:	add	r5, r0, #10
 
-//main
-E04F000F
-E2801E7D
-E2802004
-E2803005
-E0040191
-E0025003
-E0876394
-E2433002
-E1874002
-E0855003
-E0040094
-E2884E73
-E0511004
-0A000012
-E2044000
-E2844006
-AA000000
-E2805000
-//around 
-E0C98194
-E25160B4
-E0030592
-B2852001
-E0CBA296
-E0425006
-E5825054
-E5905060
-E08FF000
-E280200E
-EA000002
-E280300D
-E280500A
-E5802064
-//end 
+//0000007c <END>:
+	e5802064   // 7c:	str	r2, [r0, #100]

@@ -39,7 +39,7 @@ module testbench;
             dut.MemWrite);
 
         if (MemWrite)
-            if ((Adr === 100) & (WriteData === 7)) begin
+            if ((Adr === 100) & (WriteData === 8)) begin
                 $display("Simulation succeeded");
                 $finish;
             end
