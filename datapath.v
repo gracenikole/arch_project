@@ -26,7 +26,8 @@ module datapath (
     ImmSrc,
     ALUControl,
     lmulFlag,
-    FpuWrite
+    FpuWrite,
+    RegSrcMul
 );
     input wire clk;
     input wire reset;
@@ -47,6 +48,7 @@ module datapath (
     input wire [2:0] ALUControl;
     input wire lmulFlag;
     input wire FpuWrite;
+    input wire RegSrcMul;
 
     wire [31:0] PCNext;
     wire [31:0] PC;
@@ -110,27 +112,52 @@ module datapath (
         .q(Data)
     );
 
-    mux2 #(4) ra1mux(
+    wire [3:0] _RA1;
+    mux2 #(4) ra1mulmux(
         .d0(Instr[19:16]),
+        .d1(Instr[3:0]),
+        .s(RegSrcMul),
+        .y(_RA1)
+    );
+
+    mux2 #(4) ra1mux(
+        .d0(_RA1),
         .d1(4'd15),
         .s(RegSrc[0]),
         .y(RA1)
     );
 
-    mux2 #(4) ra2mux(
+    wire [3:0] _RA2;
+    mux2 #(4) ra2mulmux(
         .d0(Instr[3:0]),
+        .d1(Instr[11:8]),
+        .s(RegSrcMul),
+        .y(_RA2)
+    );
+
+    mux2 #(4) ra2mux(
+        .d0(_RA2),
         .d1(Instr[15:12]),
         .s(RegSrc[1]),
         .y(RA2)
     );
+
+    wire [3:0] A3;
+    mux2 #(4) a3mux(
+        .d0(Instr[15:12]),
+        .d1(Instr[19:16]),
+        .s(RegSrcMul),
+        .y(A3)
+    );
+
 
     regfile rf(
         .clk(clk),
         .we3(RegWrite),
         .ra1(RA1),
         .ra2(RA2),
-        .wa3(Instr[15:12]),
-        .wa4(Instr[11:8]),
+        .wa3(A3),
+        .wa4(Instr[15:12]),
         .wd3(Result),
         .wd4(ALUOut2),
         .long(lmulFlag),

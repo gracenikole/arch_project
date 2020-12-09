@@ -31,7 +31,12 @@ module testbench;
             ;
     end
     always @(negedge clk) begin
-        $display("%h %h %h %h", dut.arm.dp.PC, Adr, dut.arm.dp.ReadData, dut.MemWrite);
+        $display("%h %h %h %h %h",
+            dut.arm.Instr,
+            dut.arm.dp.PC,
+            Adr,
+            dut.arm.dp.ReadData,
+            dut.MemWrite);
 
         if (MemWrite)
             if ((Adr === 100) & (WriteData === 7)) begin

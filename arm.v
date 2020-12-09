@@ -28,6 +28,7 @@ module arm (
     wire [1:0] ResultSrc;
     wire lmulFlag;
     wire FpuWrite;
+    wire RegSrcMul;
 
     controller c(
         .clk(clk),
@@ -46,7 +47,8 @@ module arm (
         .ImmSrc(ImmSrc),
         .ALUControl(ALUControl),
         .lmulFlag(lmulFlag),
-        .FpuWrite(FpuWrite)
+        .FpuWrite(FpuWrite),
+        .RegSrcMul(RegSrcMul)
     );
     datapath dp(
         .clk(clk),
@@ -67,6 +69,7 @@ module arm (
         .ImmSrc(ImmSrc),
         .ALUControl(ALUControl),
         .lmulFlag(lmulFlag),
-        .FpuWrite(FpuWrite)
+        .FpuWrite(FpuWrite),
+        .RegSrcMul(RegSrcMul)
     );
 endmodule

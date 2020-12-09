@@ -21,7 +21,8 @@ module decode (
     RegSrc,
     ALUControl,
     lmulFlag,
-    FpuW
+    FpuW,
+    RegSrcMul
 );
     input wire clk;
     input wire reset;
@@ -44,6 +45,11 @@ module decode (
     output wire lmulFlag;
     output reg [2:0] ALUControl;
     output wire FpuW;
+    output wire RegSrcMul; // Mul changes the operand order
+    // 0: SrcA
+    // 1: SrcB
+    // 2: Result
+
     wire Branch;
     wire ALUOp;
     reg long;
@@ -81,13 +87,13 @@ module decode (
                 case(Funct[4:1])
                     4'b0000: ALUControl = 3'b101; //MUL
                     4'b0100: begin
-                 long = 1;
-                 ALUControl = 3'b110; //UMULL
-            end
+                         long = 1;
+                         ALUControl = 3'b110; //UMULL
+                    end
                     4'b0110: begin
-                 long = 1;
-                 ALUControl = 3'b111; //SMULL
-            end
+                         long = 1;
+                         ALUControl = 3'b111; //SMULL
+                    end
                 endcase
             end
             else begin
@@ -123,6 +129,8 @@ module decode (
     assign ImmSrc = Op;
     assign RegSrc[0] = (Op == 2'b10);
     assign RegSrc[1] = (Op == 2'b01);
+
+    assign RegSrcMul = Mop[3:0] == 4'b1001;
 
 endmodule
 
