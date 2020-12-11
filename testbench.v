@@ -21,6 +21,8 @@ module testbench;
             ;
         reset <= 0;
         dut.arm.dp.fpu_regfile.rf[0] <= {32'h3fc00000,32'h3fc00000};
+        dut.arm.dp.fpu_regfile.rf[1] <= 64'h3FF8000000000000;
+        dut.arm.dp.fpu_regfile.rf[2] <= 64'h3FF8000000000000;
     end
     always begin
         clk <= 1;

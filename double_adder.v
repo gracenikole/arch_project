@@ -8,11 +8,11 @@ module double_adder (srcA, srcB, result);
 
     //wire N, Z, C, V;
 
-    wire [63:0] expA = {56'b0, srcA[30:23]};
-    wire [63:0] expB = {56'b0, srcB[30:23]};
+    wire [63:0] expA = {56'b0, srcA[62:52]};
+    wire [63:0] expB = {56'b0, srcB[62:52]};
 
-    wire [63:0] manA = {8'b0, 1'b1, srcA[51:0]};
-    wire [63:0] manB = {8'b0, 1'b1, srcB[51:0]};
+    wire [63:0] manA = {11'b0, 1'b1, srcA[51:0]};
+    wire [63:0] manB = {11'b0, 1'b1, srcB[51:0]};
 
     wire [63:0] diff = expA - expB;
     wire [63:0] expR = diff > 0 ? expA : expB;
@@ -28,6 +28,6 @@ module double_adder (srcA, srcB, result);
     wire [63:0] _sum = sum[63:53] != 0 ? sum >> 1 : sum;
     wire [63:0] expRshift = sum[63:53] != 0 ? expR + 1 : expR;
 
-    assign result = {1'b0, expRshift[7:0], _sum[51:0]};
+    assign result = {1'b0, expRshift[10:0], _sum[51:0]};
 
 endmodule
