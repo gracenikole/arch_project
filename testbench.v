@@ -7,7 +7,6 @@ module testbench;
     wire [31:0] Adr;
     wire MemWrite;
     wire _PC[31:0];
-
     top dut(
         .clk(clk),
         .reset(reset),
@@ -15,8 +14,9 @@ module testbench;
         .Adr(Adr),
         .MemWrite(MemWrite)
     );
-
-    initial begin
+	
+   initial begin
+		dut.arm.dp.fpu_regfile.rf[0] <= {32'h3fc00000,32'h3fc00000};		 		
         reset <= 1;
         #(5)
             ;
@@ -36,7 +36,8 @@ module testbench;
             dut.arm.dp.PC,
             Adr,
             dut.arm.dp.ReadData,
-            dut.MemWrite);
+            dut.MemWrite
+		);
 
         if (MemWrite)
             if ((Adr === 100) & (WriteData === 8)) begin
@@ -54,4 +55,7 @@ module testbench;
         $dumpfile("arm_multi.vcd");
         $dumpvars;
     end
+	initial begin
+		
+	end 
 endmodule
