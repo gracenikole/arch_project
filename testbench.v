@@ -14,13 +14,13 @@ module testbench;
         .Adr(Adr),
         .MemWrite(MemWrite)
     );
-	
+
    initial begin
-		dut.arm.dp.fpu_regfile.rf[0] <= {32'h3fc00000,32'h3fc00000};		 		
         reset <= 1;
         #(5)
             ;
         reset <= 0;
+        dut.arm.dp.fpu_regfile.rf[0] <= {32'h3fc00000,32'h3fc00000};
     end
     always begin
         clk <= 1;
@@ -37,7 +37,7 @@ module testbench;
             Adr,
             dut.arm.dp.ReadData,
             dut.MemWrite
-		);
+        );
 
         if (MemWrite)
             if ((Adr === 100) & (WriteData === 8)) begin
@@ -55,7 +55,4 @@ module testbench;
         $dumpfile("arm_multi.vcd");
         $dumpvars;
     end
-	initial begin
-		
-	end 
 endmodule

@@ -44,6 +44,9 @@ module fpu_regfile (
                 else
                     rf[wa3][31:0] <= wd3[31:0];
 
-    assign rd1 = sod == 1 ? rf[ra1] : {32'b0, rf[{ra1, A1}]};
-    assign rd2 = sod == 1 ? rf[ra2] : {32'b0, rf[{ra2, A2}]};
+    wire [31:0] rd1f = A1 == 1 ? rf[ra1][63:32] : rf[ra1][31:0];
+    wire [31:0] rd2f = A2 == 1 ? rf[ra2][63:32] : rf[ra2][31:0];
+
+    assign rd1 = sod == 1 ? rf[ra1] : {32'b0, rd1f};
+    assign rd2 = sod == 1 ? rf[ra2] : {32'b0, rd2f};
 endmodule
